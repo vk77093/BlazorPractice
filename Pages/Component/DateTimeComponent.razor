@@ -1,0 +1,32 @@
+﻿<h3>DateTimeComponent</h3>
+<SessionComponent />
+<p class="font-weight-bolder">@dateTimeNow.ToString("dd/MM/yyyy")</p>
+<button class="btn btn-info" @onclick="previous">Previous</button>
+<button class="btn btn-primary" @onclick="next">Next</button>
+
+<p class="font-weight-bolder">@gettedDate.ToString("dd/MM/yyyy")</p>
+
+@code {
+    private DateTime dateTimeNow { get; set; }
+    private DateTime gettedDate { get; set; }
+
+    protected override void OnInitialized()
+    {
+        dateTimeNow = DateTime.Now;
+        gettedDate = DateTime.Now;
+        previous();
+        next();
+        base.OnInitialized();
+    }
+
+    public void previous()
+    {
+
+        gettedDate = DateTime.Now.AddMonths(-1);
+
+    }
+    public void next()
+    {
+        gettedDate = DateTime.Now.AddMonths(1);
+    }
+}

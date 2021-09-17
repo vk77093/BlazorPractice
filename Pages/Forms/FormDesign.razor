@@ -1,0 +1,11 @@
+﻿
+<div class="form-floating mb-3">
+    @Controls
+    <label for="floatingInput">@labeldata</label>
+</div>
+@code {
+    [Parameter]
+    public string labeldata { get; set; }
+    [Parameter]
+    public RenderFragment Controls { get; set; }
+}

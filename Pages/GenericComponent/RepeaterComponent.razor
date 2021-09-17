@@ -1,0 +1,39 @@
+﻿@typeparam TItem
+
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            @TableHeader
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in items)
+        {
+            <tr>
+                @Row(item)
+            </tr>
+        }
+
+    </tbody>
+</table>
+@if (this.itemToEdit != null)
+{
+    @EditTemplate(itemToEdit)
+}
+
+
+@code {
+    [Parameter]
+    public RenderFragment<TItem> Row { get; set; }
+    [Parameter]
+    public List<TItem> items { get; set; }
+    [Parameter]
+    public RenderFragment TableHeader { get; set; }
+
+    //for edit the items
+    [Parameter]
+    public RenderFragment<TItem> EditTemplate { get; set; }
+
+    public TItem itemToEdit { get; set; }
+}

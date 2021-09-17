@@ -1,0 +1,74 @@
+﻿@page "/teams"
+
+<h3>TeamsComponent</h3>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Region</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var team in teamsModel)
+        {
+            <tr>
+                <td><a href="/team/@team.Id">@team.Id</a></td>
+                <td>@team.Name</td>
+                <td>@team.Region</td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div class="container">
+    <div class="card">
+        <div class="card-body">
+            <p>@username</p>
+            <p>@year</p>
+            <p>@company</p>
+        </div>
+    </div>
+</div>
+
+@code {
+
+    private List<TeamModel> teamsModel;
+
+    protected override void OnInitialized()
+    {
+        teamsModel = new List<TeamModel>();
+
+        teamsModel.Add(new TeamModel { Id = 1, Name = "Team Red", Region = "DELHI" });
+        teamsModel.Add(new TeamModel { Id = 2, Name = "Team Blue", Region = "Pubjab" });
+        teamsModel.Add(new TeamModel { Id = 3, Name = "Team Sky", Region = "UK" });
+
+        //getting the local storage variable
+
+        GetLocalSession();
+        base.OnInitialized();
+    }
+
+    class TeamModel
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Region { get; set; }
+
+    }
+
+    @inject Blazored.LocalStorage.ILocalStorageService localStorage
+public string username;
+    public string year;
+    public string company;
+    async Task GetLocalSession()
+    {
+        //UserName = await localStorage.GetItemAsync<string>("UserName");
+        //UserSession = await localStorage.GetItemAsync<string>("UserSession");
+        username = await localStorage.GetItemAsync<string>("userName");
+        company = await localStorage.GetItemAsync<string>("company");
+        year = await localStorage.GetItemAsync<string>("year");
+
+
+    }
+}

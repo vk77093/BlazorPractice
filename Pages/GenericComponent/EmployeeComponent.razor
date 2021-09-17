@@ -1,0 +1,66 @@
+﻿@page "/employeegenerice"
+
+<h3>EmployeeComponent</h3>
+<RepeaterComponent items="customers" @ref="repeater">
+    <TableHeader>
+        <th>Name</th>
+        <th>Contact Details</th>
+        <th>Phone Number</th>
+        <th>Edit</th>
+    </TableHeader>
+    <Row Context="cust">
+        
+            <td>@cust.name</td>
+            <td>@cust.contatcDetails</td>
+            <td>@cust.phoneNo</td>
+        <td><button class="btn btn-primary btn-sm" @onclick="@(()=> {
+                                                               EditToCustomerData(cust);
+                                                           })">
+    Edit
+</button></td>
+        @*<td><button class="btn btn-primary btn-sm" @onclick="@EditToCustomerData(cust)">Edit</button></td>*@
+
+    </Row>
+    <EditTemplate Context="currentCustomer">
+      <table class="table table-bordered">
+          <tbody>
+              <tr>
+                  <td>Name : <input type="text" class="form-control" @bind-value="currentCustomer.name" /></td>
+                  <td>Contatct Details :<input type="text" class="form-control" @bind-value="currentCustomer.contatcDetails" /></td>
+                  <td>Phone Number :<input type="text" class="form-control"  @bind-value="currentCustomer.phoneNo"/></td>
+              </tr>
+          </tbody>
+      </table> 
+    </EditTemplate>
+</RepeaterComponent>
+
+@code {
+
+    private List<Customer> customers;
+    private RepeaterComponent<Customer> repeater;
+    private Customer currentCustomer;
+
+    protected override void OnInitialized()
+    {
+        customers = new List<Customer>();
+        customers.AddRange(new Customer[]
+        {
+            new Customer{name="John Wick",contatcDetails="Some details packed",phoneNo="5656165656"},
+            new Customer {name="Iron Men",contatcDetails="some Iron Men Details",phoneNo="156166616615"},
+            new Customer{name="Hulk",contatcDetails="Hulk west side",phoneNo="53161664646"},
+        });
+        base.OnInitialized();
+    }
+    private void EditToCustomerData(Customer customer)
+    {
+        repeater.itemToEdit = customer;
+    }
+
+    class Customer
+    {
+        public string name { get; set; }
+        public string contatcDetails { get; set; }
+        public string phoneNo { get; set; }
+
+    }
+}

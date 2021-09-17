@@ -1,0 +1,15 @@
+﻿
+<div class="form-group">
+    <label for="exampleInputEmail1">@label</label>
+   @Controls
+</div>
+
+
+
+@code {
+    [Parameter]
+    public string label { get; set; }
+    [Parameter]
+    public RenderFragment Controls { get; set; }
+
+}

@@ -1,0 +1,118 @@
+﻿@page "/"
+
+<h1>Hello, world!</h1>
+@inject SessionState state
+
+    <SessionLoaclViewComponet />
+
+<p>@state.SomeProperty</p>
+<p>@state.AnotherProperty</p>
+<br />
+<SessionComponent/>
+
+<p>All The Sales Person Details Are</p>
+<p>@persons.Id</p>
+<p>@persons.SalesPerson</p>
+<p>@persons.Amount</p>
+<p>@persons.IsActive</p>
+<ul>
+    @foreach (var loc in persons.Locations)
+    {
+        <li>@loc.Id</li>
+        <li>@loc.CityName</li>
+        <li>@loc.Country</li>
+    }
+</ul>
+<p>binding of one way and two way event and change accordinalifgy</p>
+<input type="text" @bind-value="persons.SalesPerson" @bind-value:event="oninput" />
+<input type="number" @bind-value="persons.Amount" @bind-value:event="oninput" />
+<label>IsActive</label>
+<input type="checkbox" @bind-value="persons.IsActive" @bind-value:event="oninput" />
+<br />
+<label>Radio Button</label>
+<input type="radio" value="1" name="group" checked="@(selectedGroup==1)" @onclick="@(()=>selectedGroup=1)" />1
+<input type="radio" value="2" name="group" checked="@(selectedGroup==2)" @onclick="@(()=>selectedGroup=2)" />2
+
+<br />
+<p>The Selected Radio is @selectedGroup</p>
+
+<p>The Drop down List</p>
+<select @bind="selectedIndex">
+    <option value="0">Select the City</option>
+    @foreach (var city in persons.Locations)
+    {
+        <option value="@city.Id">@city.CityName</option>
+    }
+</select>
+<p>The Slected City is @selectedIndex</p>
+<br />
+<div class="container">
+    <p>ALL the changes value from table</p>
+    <ul class="text-center">
+        @foreach (var loc in persons.Locations)
+        {
+            <li>@loc.Id</li>
+            <li>@loc.CityName</li>
+            <li>@loc.Country</li>
+        }
+
+    </ul>
+</div>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>City</th>
+            <th>Country</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var loc in persons.Locations)
+        {
+            <tr>
+                <td><input type="number" @bind-value="loc.Id" @bind-value:event="oninput" /></td>
+                <td><input type="text" @bind-value="loc.CityName" @bind-value:event="oninput" /></td>
+                <td><input type="text" @bind-value="loc.Country" @bind-value:event="oninput" /></td>
+            </tr>
+        }
+    </tbody>
+</table>
+@*<SurveyPrompt Title="How is Blazor working for you?" />*@
+@code{
+    private int selectedGroup = 0;
+    private int selectedIndex = 1;
+
+    class IndexViewModel
+    {
+        public int Id { get; set; }
+        public string SalesPerson { get; set; }
+        public double Amount { get; set; }
+        public bool IsActive { get; set; }
+        public List<Location> Locations { get; set; }
+
+    }
+    class Location
+    {
+        public int Id { get; set; }
+        public string CityName { get; set; }
+        public string Country { get; set; }
+    }
+    private IndexViewModel persons = null;
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        persons = new IndexViewModel()
+        {
+            Id = 1,
+            SalesPerson = "Vijay kumar",
+            Amount = 1225.00,
+            IsActive = true,
+            Locations = new List<Location>
+         {
+                 new Location{Id=1,CityName="Jalandhar",Country="India" },
+                 new Location{Id=2,CityName="Delhi",Country="UK"}
+              }
+
+        };
+    }
+}

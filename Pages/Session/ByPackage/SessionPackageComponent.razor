@@ -1,0 +1,111 @@
+﻿<h2>@Name</h2>
+<button @onclick="Clear">GET Session</button>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6 w-25">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="text-center card-title">Log In Here</h4>
+                </div>
+                <div class="card-body">
+                    <EditForm Model="userModel" OnValidSubmit="onUserSubmit">
+                        <div class="form-group">
+                            <label>User Name</label>
+                            <InputText class="form-control" @bind-Value="userModel.UserName"></InputText>
+                        </div>
+                        <div class="form-group">
+                            <label>Select Finical year</label>
+                            <InputSelect @bind-Value="userModel.YearSelected" class="form-control">
+                                <option value="2019">2019-20</option>
+                                <option value="2020">2020-21</option>
+                                <option value="2021">2021-22</option>
+
+                            </InputSelect>
+
+                        </div>
+                        <div class="form-group">
+                            <label>Select Finical year</label>
+                            <InputSelect @bind-Value="userModel.CompanySelected" class="form-control">
+                                <option value="Delhi">Delhi</option>
+                                <option value="Bangalore">Bangalore</option>
+                                <option value="Chennai">Chennai</option>
+
+                            </InputSelect>
+
+                        </div>
+                        <button type="submit" class="btn btn-primary">Log In There</button>
+                    </EditForm>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <p> @username</p>
+    <p> @company</p>
+    <p> @year </p>
+</div>
+
+@inject Blazored.SessionStorage.ISessionStorageService sessionStorage
+
+@code {
+    //public string sessiondata;
+    //public string name;
+    //protected override async Task OnAfterRenderAsync(bool firstRender)
+    //{
+    //    await sessionStorage.SetItemAsync("nameDataSet", "Vijay Kumar");
+    //     sessiondata = await sessionStorage.GetItemAsync<string>("nameDataSet");
+    //    //var name = await sessionStorage.GetItemAsync<string>("name");
+
+    @inject NavigationManager nvm
+
+    private UserModel userModel = new UserModel();
+
+
+    private void onUserSubmit()
+    {
+        //ss.userName = userModel.UserName;
+        //ss.yearSelected = userModel.YearSelected;
+        //ss.companySelected = userModel.CompanySelected;
+        sessionStorage.SetItemAsync("userName", userModel.UserName);
+        sessionStorage.SetItemAsync("year", userModel.YearSelected);
+        sessionStorage.SetItemAsync("company", userModel.CompanySelected);
+        nvm.NavigateTo("/sessionpackage");
+        company = "company is " +  sessionStorage.GetItemAsync<string>("company");
+        username = "username is " +  sessionStorage.GetItemAsync<string>("userName");
+        year = "year is " +  sessionStorage.GetItemAsync<string>("year");
+    }
+
+
+    public string Name;
+    public string username;
+    public string company;
+    public string year;
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await sessionStorage.SetItemAsync("ID", "20019");
+        await sessionStorage.SetItemAsync("Name", "vijay kumar");
+        Name = "ID: " + await sessionStorage.GetItemAsync<string>("ID") + "Name : " + await sessionStorage.GetItemAsync<string>("Name");
+        //company = "company is " + await sessionStorage.GetItemAsync<string>("company");
+        //username = "username is " + await sessionStorage.GetItemAsync<string>("userName");
+        //year = "year is " + await sessionStorage.GetItemAsync<string>("year");
+    }
+    protected override void OnInitialized()
+    {
+        //sessionStorage.SetItemAsync("ID", "20019");
+        //sessionStorage.SetItemAsync("Name", "vijay kumar");
+        //Name = "ID: " + sessionStorage.GetItemAsync<string>("ID") + "Name : " + sessionStorage.GetItemAsync<string>("Name");
+        //company = "company is " + sessionStorage.GetItemAsync<string>("company");
+        //username = "username is " + sessionStorage.GetItemAsync<string>("username");
+        //year = "year is " + sessionStorage.GetItemAsync<string>("year");
+
+    }
+    public async void Clear()
+    {
+        //this will clear the session data
+        await sessionStorage.ClearAsync();
+    }
+
+
+}

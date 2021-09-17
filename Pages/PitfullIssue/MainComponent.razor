@@ -1,0 +1,23 @@
+﻿@page "/pitfullissue"
+<h3>ParentComponent</h3>
+<DetailsComponent employee="employeeModels"></DetailsComponent>
+@code {
+
+    private EmployeeModel employeeModels;
+
+    protected  override  void OnInitialized()
+    {
+
+        //System.Threading.Thread.Sleep(5000);
+        employeeModels = new EmployeeModel
+        {
+            Id = 1,
+            emp_name = "vijay",
+            emp_sallery = "25000",
+            emp_departmemt = "IT",
+        };
+        base.OnInitialized();
+
+    }
+
+}

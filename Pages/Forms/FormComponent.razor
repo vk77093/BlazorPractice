@@ -1,0 +1,44 @@
+﻿@page "/formvalidation"
+
+<h3>FormComponent</h3>
+<EditForm Model="person" OnInvalidSubmit="SubmitDetails">
+    <DataAnnotationsValidator/>
+    <ValidationSummary/>
+    <FormDesign labeldata="Firstname">
+        <Controls>
+            @*<input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">*@
+            <InputText class="form-control" @bind-Value="person.firsrname" placeholder="name3"></InputText>
+        </Controls> 
+    </FormDesign>
+    <FormDesign labeldata="Email Id">
+        <Controls>
+            <InputText class="form-control" @bind-Value="person.email_id" placeholder="name"></InputText>
+        </Controls>
+    </FormDesign>
+    <FormDesign labeldata="Conatct Details">
+        <Controls>
+            <InputTextArea class="form-control" @bind-Value="person.contactDetails" placeholder="name2"></InputTextArea>
+        </Controls>
+    </FormDesign>
+    <button type="submit" class="btn btn-primary">Add It</button>
+</EditForm>
+
+@code {
+    @using System.ComponentModel.DataAnnotations;
+    Person person = new Person();
+
+    private void SubmitDetails()
+    {
+        Console.WriteLine("FormSubmitted");
+    }
+    class Person
+    {
+        [Required]
+        public string firsrname { get; set; }
+        [Required]
+        [EmailAddress]
+        public string email_id { get; set; }
+        [Required]
+        public string contactDetails { get; set; }
+    }
+}

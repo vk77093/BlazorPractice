@@ -1,0 +1,119 @@
+﻿@page "/secondsession"
+@inject Blazored.LocalStorage.ILocalStorageService localStorage
+
+@if (username == null)
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 w-25">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="text-center card-title">Log In Here</h4>
+                    </div>
+                    <div class="card-body">
+                        <EditForm Model="userModel" OnValidSubmit="LoginUser">
+                            <div class="form-group">
+                                <label>User Name</label>
+                                <InputText class="form-control" @bind-Value="userModel.UserName"></InputText>
+                            </div>
+                            <div class="form-group">
+                                <label>Select Finical year</label>
+                                <InputSelect @bind-Value="userModel.YearSelected" class="form-control">
+                                    <option value="2019">2019-20</option>
+                                    <option value="2020">2020-21</option>
+                                    <option value="2021">2021-22</option>
+
+                                </InputSelect>
+
+                            </div>
+                            <div class="form-group">
+                                <label>Select Finical year</label>
+                                <InputSelect @bind-Value="userModel.CompanySelected" class="form-control">
+                                    <option value="Delhi">Delhi</option>
+                                    <option value="Bangalore">Bangalore</option>
+                                    <option value="Chennai">Chennai</option>
+
+                                </InputSelect>
+
+                            </div>
+                            <button type="submit" class="btn btn-primary">Log In There</button>
+                        </EditForm>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr />
+}
+else
+{
+<div class="text-center font-weight-bold text-primary">
+    <p>@username</p>
+    <p>@year</p>
+    <p>@company</p>
+    <button class="btn btn-primary" @onclick="Logout">Clear</button>
+</div>
+}
+
+
+@code {
+
+    @inject NavigationManager nvm
+  
+    private UserModel userModel = new UserModel();
+
+
+    //string UserName { get; set; }
+    //string UserSession { get; set; }
+    //string LoginName { get; set; }
+
+    public string username { get; set; }
+    public string year { get; set; }
+    public string company { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await GetLocalSession();
+
+            localStorage.Changed += (sender, e) =>
+            {
+                Console.WriteLine($"Value for key {e.Key} changed from {e.OldValue} to {e.NewValue}");
+            };
+
+            StateHasChanged();
+        }
+    }
+
+    async Task LoginUser()
+    {
+        //await localStorage.SetItemAsync("UserName", LoginName);
+        //await localStorage.SetItemAsync("UserSession", "PIOQJWDPOIQJWD");
+        //await GetLocalSession();
+        await localStorage.SetItemAsync("userName", userModel.UserName);
+        await localStorage.SetItemAsync("company", userModel.CompanySelected);
+        await localStorage.SetItemAsync("year", userModel.YearSelected);
+        await GetLocalSession();
+    }
+
+    async Task GetLocalSession()
+    {
+        //UserName = await localStorage.GetItemAsync<string>("UserName");
+        //UserSession = await localStorage.GetItemAsync<string>("UserSession");
+        username = await localStorage.GetItemAsync<string>("userName");
+        company = await localStorage.GetItemAsync<string>("company");
+        year = await localStorage.GetItemAsync<string>("year");
+
+
+    }
+
+    async Task Logout()
+    {
+        await localStorage.RemoveItemAsync("userName");
+        await localStorage.RemoveItemAsync("company");
+        await localStorage.RemoveItemAsync("year");
+        await GetLocalSession();
+    }
+}

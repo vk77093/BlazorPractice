@@ -1,0 +1,20 @@
+﻿@page "/sessionfirst"
+
+@inject SessionState state
+
+<p>@state.SomeProperty</p>
+<p>@state.AnotherProperty</p>
+<p>@session.SomeProperty and @session.AnotherProperty</p>
+ @code{
+     private SessionState session = new SessionState();
+
+     protected override void OnInitialized()
+     {
+         session = new SessionState()
+         {
+             SomeProperty = "vijay kumar",
+             AnotherProperty = 25,
+         };
+         base.OnInitialized();
+     }
+}

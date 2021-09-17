@@ -1,0 +1,15 @@
+﻿<h3>DetailsComponent</h3>
+<p>ID :@employee.Id</p>
+<p>Name :@employee.emp_name</p>
+<p>Sallery : @employee.emp_sallery</p>
+<p>Departtment :@employee.emp_departmemt</p>
+@code {
+    [Parameter]
+    public EmployeeModel employee { get; set; }
+
+        protected override void OnInitialized()
+        {
+        this.employee.LoadEmployee();
+            base.OnInitialized();
+        }
+}

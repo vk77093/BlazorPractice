@@ -1,0 +1,64 @@
+﻿@page "/team/{Id:int}"
+<SessionComponent />
+<h3>TeamComponent @Id</h3>
+
+<div class="text-center">
+    <p>All the Selected Team is </p>
+<ul>
+    <li>@teams.Id | @teams.Name @teams.Region</li>
+</ul>
+</div>
+<div class="text-center">
+    <p>All the Seleted Teams with Members Details</p>
+    <ul>
+        @foreach (var mem in this.members)
+        {
+            <li>@mem.Id |@mem.Name |@mem.Age |@mem.TeamId</li>
+        }
+    </ul>
+</div>
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    private TeamModel teams;
+    private IEnumerable<MembersModel> members;
+
+    protected override void OnInitialized()
+    {
+        var teamsModel = new List<TeamModel>();
+        teamsModel.Add(new TeamModel { Id = 1, Name = "Team Red", Region = "DELHI" });
+        teamsModel.Add(new TeamModel { Id = 2, Name = "Team Blue", Region = "Pubjab" });
+        teamsModel.Add(new TeamModel { Id = 3, Name = "Team Sky", Region = "UK" });
+
+
+        var allMembers = new List<MembersModel>();
+        allMembers.Add(new MembersModel { Id = 1, Name = "Vijay", Age = 24, TeamId = 1 });
+        allMembers.Add(new MembersModel { Id = 2, Name = "Ajit", Age = 32, TeamId = 1 });
+        allMembers.Add(new MembersModel { Id = 3, Name = "Krishna", Age = 26, TeamId = 2 });
+        allMembers.Add(new MembersModel { Id = 4, Name = "Ajit Kumar", Age = 32, TeamId = 2 });
+        allMembers.Add(new MembersModel { Id = 5, Name = "Dalip", Age = 26, TeamId = 3 });
+        allMembers.Add(new MembersModel { Id = 6, Name = "Arjinder", Age = 32, TeamId = 2 });
+        base.OnInitialized();
+
+        teams = teamsModel.FirstOrDefault(x => x.Id == this.Id);
+        members = allMembers.Where(x => x.TeamId == this.Id);
+    }
+
+
+    class TeamModel
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Region { get; set; }
+    }
+    class MembersModel
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public int Age { get; set; }
+        public int TeamId { get; set; }
+    }
+
+}

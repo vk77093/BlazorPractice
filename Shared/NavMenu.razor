@@ -1,0 +1,124 @@
+﻿<div class="top-row pl-4 navbar navbar-dark">
+    <a class="navbar-brand" href="">AuthenticationDemo</a>
+    <button class="navbar-toggler" @onclick="ToggleNavMenu">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+</div>
+
+<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+    <ul class="nav flex-column">
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                <span class="oi oi-home" aria-hidden="true"></span> Home
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="counter">
+                <span class="oi oi-plus" aria-hidden="true"></span> Counter
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="fetchdata">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="sales">
+                <span class="oi oi-moon" aria-hidden="true"></span> sales
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="order">
+                <span class="oi oi-action-redo" aria-hidden="true"></span> order
+            </NavLink>
+        </li>
+
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="teams">
+                <span class="oi oi-share-boxed" aria-hidden="true"></span> Teams
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="formcomponetrender">
+                <span class="oi oi-arrow-circle-bottom" aria-hidden="true"></span> Render Componets
+            </NavLink>
+        </li>
+
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" @onclick="()=>expandSubNav = !expandSubNav">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> Generic Components
+            </NavLink>
+        </li>
+
+        @if (expandSubNav)
+        {
+
+            <li class="nav-item px-3">
+                <NavLink class="expand-menu nav-link" href="employeegenerice">
+                    <span class="oi oi-grid-four-up" aria-hidden="true"></span>Employee Generic
+                </NavLink>
+            </li>
+            <li class="nav-item px-3">
+                <NavLink class="expand-menu nav-link" href="pitfullissue">
+                    <span class="oi oi-aperture" aria-hidden="true"></span>Pit Full Issue
+                </NavLink>
+            </li>
+            <li class="nav-item px-3">
+                <NavLink class="expand-menu nav-link" href="formvalidation">
+                    <span class="oi oi-aperture" aria-hidden="true"></span>Form Design
+                </NavLink>
+            </li>
+
+        }
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" @onclick="()=>expandSubNav = !expandSubNav">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> Session Demo
+            </NavLink>
+        </li>
+
+        @if (expandSubNav)
+        {
+
+            <li class="nav-item px-3">
+                <NavLink class="expand-menu nav-link" href="blazorseeion">
+                    <span class="oi oi-grid-four-up" aria-hidden="true"></span>Blazor Session
+                </NavLink>
+            </li>
+            <li class="nav-item px-3">
+                <NavLink class="expand-menu nav-link" href="sessionpackage">
+                    <span class="oi oi-aperture" aria-hidden="true"></span>Session Storage
+                </NavLink>
+            </li>
+            <li class="nav-item px-3">
+                <NavLink class="expand-menu nav-link" href="secondsession">
+                    <span class="oi oi-aperture" aria-hidden="true"></span>Local Session
+                </NavLink>
+            </li>
+
+        }
+
+        <li class="nav-item px-3">
+            <NavLink class="expand-menu nav-link" href="viewdependency">
+                <span class="oi oi-audio-spectrum" aria-hidden="true"></span>Dependency
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="expand-menu nav-link" href="eventcalender">
+                <span class="oi oi-calendar" aria-hidden="true"></span>Event Calender
+            </NavLink>
+        </li>
+
+    </ul>
+</div>
+
+@code {
+    private bool collapseNavMenu = true;
+    private bool expandSubNav=false;
+
+    private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+}

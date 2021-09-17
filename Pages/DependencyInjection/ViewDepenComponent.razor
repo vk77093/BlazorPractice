@@ -1,0 +1,20 @@
+﻿@page "/viewdependency"
+@inject IEmployeeService emps
+
+
+<h3>ViewDepenComponent</h3>
+<p>@employees.emp_details</p>
+<p>@employees.emp_name</p>
+<p>@employees.Id</p>
+<p>@emps.Uid</p>
+@code { 
+    private EmployeeModelsdep employees;
+    protected override void OnInitialized()
+    {
+        if(employees == null)
+        {
+            employees = emps.GetEmployeeById(1);
+        }
+        base.OnInitialized();
+    }
+}

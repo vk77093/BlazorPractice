@@ -1,0 +1,33 @@
+﻿@inject Blazored.LocalStorage.ILocalStorageService localStorage
+
+@if (username != null && company != null && year != null)
+{
+
+}
+<p>@username</p>
+<p>@year</p>
+<p>@company</p>
+
+@code {
+
+
+    public string username;
+    public string year;
+    public string company;
+    protected override void OnInitialized()
+    {
+        //base.OnInitialized();
+        GetLocalSession();
+    }
+
+    async Task GetLocalSession()
+    {
+        //UserName = await localStorage.GetItemAsync<string>("UserName");
+        //UserSession = await localStorage.GetItemAsync<string>("UserSession");
+        username = await localStorage.GetItemAsync<string>("userName");
+        company = await localStorage.GetItemAsync<string>("company");
+        year = await localStorage.GetItemAsync<string>("year");
+
+
+    }
+}

@@ -1,0 +1,22 @@
+﻿@inject SessionService ss
+
+
+@if (ss.userName != null && ss.companySelected != null && ss.yearSelected != null)
+{
+<div class="card">
+    <div class="card-header">
+        <h4 class="text-center card-title">All the Global Session Values</h4>
+
+    </div>
+    <div class="card-body">
+        <h3>@ss.userName</h3>
+        <h3>@ss.companySelected</h3>
+        <h3>@ss.yearSelected</h3>
+    </div>
+</div>
+}
+
+
+@code {
+
+}
